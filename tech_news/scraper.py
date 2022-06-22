@@ -38,7 +38,21 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_noticia(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(html_content)
+    posts = []
+    for news in selector.css('.entry-preview'):
+        url = news.css('span > a.url.fn.n::attr(href)').get()
+        author = news.css('span > a.url.fn.n::text').get()
+        title = news.css('h2.entry-title > a::text').get()
+        date = news.css('li.meta-date::text').get()
+        posts.append({
+            'url': url,
+            'title': title,
+            'timestamp': date,
+            'writer': author,
+            })
+
+    return posts
 
 
 # Requisito 5
@@ -48,5 +62,5 @@ def get_tech_news(amount):
 
 if __name__ == '__main__':
     html_page = fetch('https://blog.betrybe.com/page/2/')
-    content = scrape_next_page_link(html_page)
+    content = scrape_noticia(html_page)
     print(content)
