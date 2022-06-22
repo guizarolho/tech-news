@@ -1,4 +1,5 @@
 import requests
+from parsel import Selector
 import time
 
 
@@ -6,7 +7,9 @@ import time
 def fetch(url):
     try:
         response = requests.get(
-            url, headers={"user-agent": "Fake user-agent"}, timeout=3
+            url,
+            headers={"user-agent": "Fake user-agent"},
+            timeout=3
             )
         if response.status_code == 200:
             return response.text
@@ -20,7 +23,10 @@ def fetch(url):
 
 # Requisito 2
 def scrape_novidades(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(html_content)
+    nodes = selector.xpath('//h2[has-class("entry-title")]').css(
+        "a::attr(href)").getall()
+    return str(nodes)
 
 
 # Requisito 3
@@ -39,5 +45,6 @@ def get_tech_news(amount):
 
 
 if __name__ == '__main__':
-    content = fetch('https://app.betrybe.com/')
+    html_page = fetch('https://app.betrybe.com/')
+    content = scrape_novidades(html_page)
     print(content)
