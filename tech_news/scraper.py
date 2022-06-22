@@ -26,7 +26,7 @@ def scrape_novidades(html_content):
     selector = Selector(html_content)
     nodes = selector.xpath('//h2[has-class("entry-title")]').css(
         "a::attr(href)").getall()
-    return str(nodes)
+    return nodes
 
 
 # Requisito 3
