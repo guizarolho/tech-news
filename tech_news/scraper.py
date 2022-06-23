@@ -67,7 +67,7 @@ def scrape_noticia(html_content):
 
 # Requisito 5
 def get_tech_news(amount):
-    BASE_URL = 'https://blog.betrybe.com/'
+    BASE_URL = 'https://blog.betrybe.com'
     CURRENT = 1
     content = fetch(BASE_URL)
     url_list = scrape_novidades(content)[0:amount]
@@ -75,7 +75,7 @@ def get_tech_news(amount):
     while len(url_list) != amount:
         CURRENT = CURRENT + 1
         limit = amount - len(url_list)
-        page_content = fetch(BASE_URL + f'page/{CURRENT}')
+        page_content = fetch(BASE_URL + f'/page/{CURRENT}/')
         new_links = scrape_novidades(page_content)[0:limit]
         url_list.extend(new_links)
 
@@ -90,6 +90,6 @@ def get_tech_news(amount):
 
 
 if __name__ == '__main__':
-    content = get_tech_news(15)
+    content = get_tech_news(2)
     print(content)
     print(len(content))
