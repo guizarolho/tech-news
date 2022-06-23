@@ -16,7 +16,7 @@ def search_by_title(title):
 # Requisito 7
 def search_by_date(date):
     try:
-        locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+        locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
         date_convert = datetime.datetime.strptime(date, '%Y-%m-%d')
         format_date = date_convert.strftime('%-d-%B-%Y').replace('-', ' de ')
 
