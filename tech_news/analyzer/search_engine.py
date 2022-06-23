@@ -18,7 +18,12 @@ def search_by_date(date):
 
 # Requisito 8
 def search_by_tag(tag):
-    """Seu código deve vir aqui"""
+    results = search_news({'tags': {'$regex': tag, '$options': 'i'}})
+    list = []
+    for news in results:
+        news_tuple = tuple([news['title'], news['url']])
+        list.append(news_tuple)
+    return list
 
 
 # Requisito 9
@@ -32,5 +37,5 @@ def search_by_category(category):
 
 
 if __name__ == '__main__':
-    results = search_by_category("novidades")
+    results = search_by_tag("Tecnologia")
     print(results)
