@@ -67,9 +67,3 @@ def scrape_noticia(html_content):
 # Requisito 5
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
-
-
-if __name__ == '__main__':
-    html_page = fetch('https://blog.betrybe.com/tecnologia/anonymous-tudo-sobre/')
-    content = scrape_noticia(html_page)
-    print(content)
