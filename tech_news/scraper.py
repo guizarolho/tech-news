@@ -75,8 +75,8 @@ def get_tech_news(amount):
     while len(url_list) != amount:
         CURRENT = CURRENT + 1
         limit = amount - len(url_list)
-        content = fetch(BASE_URL + f'page/{CURRENT}')
-        new_links = scrape_novidades(content)[0:limit]
+        page_content = fetch(BASE_URL + f'page/{CURRENT}')
+        new_links = scrape_novidades(page_content)[0:limit]
         url_list.extend(new_links)
 
     detailed = []
