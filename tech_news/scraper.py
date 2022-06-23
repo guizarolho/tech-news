@@ -1,6 +1,7 @@
 import requests
 from parsel import Selector
 import time
+import bs4
 
 
 # Requisito 1
@@ -47,7 +48,8 @@ def scrape_noticia(html_content):
     date = selector.css('li.meta-date::text').get()
     tags = selector.css('a[rel="tag"]::text').getall()
     comments = selector.css('div.comment-body').getall()
-    paragraph = selector.css('script ~ p::text').get()
+    paragraph = selector.css('script ~ p').get()
+    soup = bs4.BeautifulSoup(paragraph, 'html.parser')
     post_category = selector.css('.label::text').get()
 
     return ({
@@ -56,7 +58,7 @@ def scrape_noticia(html_content):
         'timestamp': date,
         'writer': author,
         'comments_count': len(comments),
-        'summary': paragraph,
+        'summary': soup.get_text(),
         'tags': tags,
         'category': post_category
     })
