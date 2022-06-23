@@ -37,22 +37,29 @@ def scrape_next_page_link(html_content):
 
 
 # Requisito 4
+# p.get_text in beautiful soup
 def scrape_noticia(html_content):
     selector = Selector(html_content)
-    posts = []
-    for news in selector.css('.entry-preview'):
-        url = news.css('span > a.url.fn.n::attr(href)').get()
-        author = news.css('span > a.url.fn.n::text').get()
-        title = news.css('h2.entry-title > a::text').get()
-        date = news.css('li.meta-date::text').get()
-        posts.append({
-            'url': url,
-            'title': title,
-            'timestamp': date,
-            'writer': author,
-            })
 
-    return posts
+    url = selector.css('link[rel="canonical"]::attr(href)').get()
+    author = selector.css('span > a.url.fn.n::text').get()
+    title = selector.css('h1.entry-title::text').get()
+    date = selector.css('li.meta-date::text').get()
+    tags = selector.css('a[rel="tag"]::text').getall()
+    comments = selector.css('div.comment-body').getall()
+    paragraph = selector.css('script ~ p::text').get()
+    post_category = selector.css('.label::text').get()
+
+    return ({
+        'url': url,
+        'title': title,
+        'timestamp': date,
+        'writer': author,
+        'comments_count': len(comments),
+        'summary': paragraph,
+        'tags': tags,
+        'category': post_category
+    })
 
 
 # Requisito 5
@@ -61,6 +68,6 @@ def get_tech_news(amount):
 
 
 if __name__ == '__main__':
-    html_page = fetch('https://blog.betrybe.com/page/2/')
+    html_page = fetch('https://blog.betrybe.com/tecnologia/anonymous-tudo-sobre/')
     content = scrape_noticia(html_page)
     print(content)
