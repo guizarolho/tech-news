@@ -50,4 +50,3 @@ def search_by_category(category):
         news_tuple = tuple([news['title'], news['url']])
         list.append(news_tuple)
     return list
-
