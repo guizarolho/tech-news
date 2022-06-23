@@ -51,7 +51,3 @@ def search_by_category(category):
         list.append(news_tuple)
     return list
 
-
-if __name__ == '__main__':
-    results = search_by_date("04-07-1980")
-    print(results)
