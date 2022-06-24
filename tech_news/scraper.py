@@ -90,6 +90,6 @@ def get_tech_news(amount):
 
 
 if __name__ == '__main__':
-    content = get_tech_news(1)
+    content = get_tech_news(5)
     print(content)
     print(len(content))

@@ -1,6 +1,6 @@
-from tech_news.database import search_news
 import locale
 import datetime
+from tech_news.database import search_news
 
 
 # Requisito 6
