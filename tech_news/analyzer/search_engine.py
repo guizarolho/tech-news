@@ -1,4 +1,3 @@
-import locale
 import datetime
 from tech_news.database import search_news
 
@@ -13,15 +12,37 @@ def search_by_title(title):
     return list
 
 
+pt_month = {
+    'Jan': 'janeiro',
+    'Feb': 'fevereiro',
+    'Mar': 'março',
+    'Apr': 'abril',
+    'May': 'maio',
+    'Jun': 'junho',
+    'Jul': 'julho',
+    'Aug': 'agosto',
+    'Sep': 'setembro',
+    'Oct': 'outubro',
+    'Nov': 'novembro',
+    'Dec': 'dezembro'
+}
+
+
+def date_locale(date):
+    date_convert = datetime.datetime.strptime(date, '%Y-%m-%d')
+    format_date = date_convert.strftime('%-d-%b-%Y').split('-')
+    month = pt_month[format_date[1]]
+
+    return f'{format_date[0]} de {month} de {format_date[2]}'
+
+
 # Requisito 7
 def search_by_date(date):
     try:
-        locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
-        date_convert = datetime.datetime.strptime(date, '%Y-%m-%d')
-        format_date = date_convert.strftime('%-d-%B-%Y').replace('-', ' de ')
+        date_br = date_locale(date)
 
         results = search_news(
-            {'timestamp': {'$regex': str(format_date), '$options': 'i'}}
+            {'timestamp': {'$regex': str(date_br), '$options': 'i'}}
         )
         list = []
         for news in results:
@@ -50,3 +71,8 @@ def search_by_category(category):
         news_tuple = tuple([news['title'], news['url']])
         list.append(news_tuple)
     return list
+
+
+if __name__ == '__main__':
+    results = search_by_date('2021-04-04')
+    print(results)
