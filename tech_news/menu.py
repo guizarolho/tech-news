@@ -1,4 +1,4 @@
-from sys import stderr
+import sys
 from tech_news.scraper import get_tech_news
 from tech_news.analyzer.ratings import top_5_categories, top_5_news
 from tech_news.analyzer.search_engine import (
@@ -50,9 +50,9 @@ def switch(option):
         '7': end_script
     }
     try:
-        return opcoes.get(option, stderr)()
+        return print(opcoes.get(option)())
     except TypeError:
-        return 'Opção inválida'
+        return print('Opção inválida', file=sys.stderr)
 
 
 # Requisito 12
@@ -70,7 +70,7 @@ def analyzer_menu():
     """)
 
     mensagem = switch(option)
-    print(mensagem)
+    return mensagem
 
 
 if __name__ == '__main__':
